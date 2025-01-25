@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'source_dart.dart';
+part of 'nest.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ExternalSourceAdapter extends TypeAdapter<ExternalSource> {
+class ExternalSourceAdapter extends TypeAdapter<Nest> {
   @override
   final int typeId = 5;
 
   @override
-  ExternalSource read(BinaryReader reader) {
+  Nest read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ExternalSource(
+    return Nest(
       name: fields[0] as String,
       homePage: fields[1] as String,
       iconUrl: fields[5] as String,
@@ -34,7 +34,7 @@ class ExternalSourceAdapter extends TypeAdapter<ExternalSource> {
   }
 
   @override
-  void write(BinaryWriter writer, ExternalSource obj) {
+  void write(BinaryWriter writer, Nest obj) {
     writer
       ..writeByte(13)
       ..writeByte(0)

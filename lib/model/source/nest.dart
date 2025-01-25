@@ -1,10 +1,10 @@
 
 import 'package:hive/hive.dart';
 
-part 'source_dart.g.dart';
+part 'nest.g.dart';
 
 @HiveType(typeId: 5)
-class ExternalSource {
+class Nest {
 
   @HiveField(0)
   String name = "";
@@ -33,7 +33,7 @@ class ExternalSource {
   @HiveField(12)
   List<String> ads = [];
 
-  ExternalSource({
+  Nest({
     required this.name,
     required this.homePage,
     required this.iconUrl,
@@ -49,7 +49,7 @@ class ExternalSource {
     required this.ads,
   });
 
-  ExternalSource.fromJson(Map<String, dynamic> json) {
+  Nest.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     homePage = json['home-page'];
     iconUrl = json['icon-url'];

@@ -24,7 +24,7 @@ class SourceAdapter extends TypeAdapter<Source> {
       hasCustomSupport: fields[4] as bool,
       iconUrl: fields[5] as String,
       siteCategories: (fields[6] as List).cast<String>(),
-      externalSource: fields[7] as ExternalSource?,
+      nest: fields[7] as Nest?,
     )..otherVersions = (fields[8] as List).cast<Source>();
   }
 
@@ -47,7 +47,7 @@ class SourceAdapter extends TypeAdapter<Source> {
       ..writeByte(6)
       ..write(obj.siteCategories)
       ..writeByte(7)
-      ..write(obj.externalSource)
+      ..write(obj.nest)
       ..writeByte(8)
       ..write(obj.otherVersions);
   }
@@ -77,9 +77,9 @@ Source _$SourceFromJson(Map<String, dynamic> json) => Source(
       siteCategories: (json['siteCategories'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      externalSource: json['externalSource'] == null
+      nest: json['externalSource'] == null
           ? null
-          : ExternalSource.fromJson(
+          : Nest.fromJson(
               json['externalSource'] as Map<String, dynamic>),
     )..otherVersions = (json['otherVersions'] as List<dynamic>)
         .map((e) => Source.fromJson(e as Map<String, dynamic>))
@@ -93,6 +93,6 @@ Map<String, dynamic> _$SourceToJson(Source instance) => <String, dynamic>{
       'hasCustomSupport': instance.hasCustomSupport,
       'iconUrl': instance.iconUrl,
       'siteCategories': instance.siteCategories,
-      'externalSource': instance.externalSource,
+      'externalSource': instance.nest,
       'otherVersions': instance.otherVersions,
     };

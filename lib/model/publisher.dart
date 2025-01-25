@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:klaws/model/article.dart';
-import 'package:klaws/model/source/source_dart.dart';
+import 'package:klaws/model/source/nest.dart';
 
 part 'publisher.g.dart';
 
@@ -23,7 +23,7 @@ class Source {
   @HiveField(6)
   final List<String> siteCategories;
   @HiveField(7)
-  final ExternalSource? externalSource;
+  final Nest? nest;
   @HiveField(8)
   List<Source> otherVersions = [];
 
@@ -35,7 +35,7 @@ class Source {
     required this.hasCustomSupport,
     required this.iconUrl,
     required this.siteCategories,
-    this.externalSource,
+    this.nest,
   });
 
   Future<Article> article(Article article) {

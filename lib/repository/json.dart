@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:hive/hive.dart';
 import 'package:klaws/model/article.dart';
 import 'package:klaws/model/publisher.dart';
-import 'package:klaws/model/source/source_dart.dart';
+import 'package:klaws/model/source/nest.dart';
 import 'package:klaws/provider/feed_extractor.dart';
 
 part 'json.g.dart';
@@ -19,7 +19,7 @@ class JsonSource extends Source {
     required super.hasCustomSupport,
     required super.iconUrl,
     required super.siteCategories,
-    required super.externalSource,
+    required super.nest,
   });
 
   @override

@@ -2,17 +2,17 @@ import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as html;
 import 'package:klaws/model/article.dart';
-import 'package:klaws/model/source/source_dart.dart';
+import 'package:klaws/model/source/nest.dart';
 import 'package:klaws/model/source/util.dart';
 import 'package:klaws/repository/json.dart';
 
 Future<Map<String, String>> extractCategoriesCss(JsonSource source, Dio dio) async {
   Map<String, String> categories = {};
   final response =
-      await dio.get(source.externalSource!.homePage, queryParameters: source.externalSource!.headers.json_);
-  var locators = source.externalSource!.categories.locator;
-  var locatorsExclude = source.externalSource!.categories.exclude;
-  Include? locatorsInclude = source.externalSource!.categories.include;
+      await dio.get(source.nest!.homePage, queryParameters: source.nest!.headers.json_);
+  var locators = source.nest!.categories.locator;
+  var locatorsExclude = source.nest!.categories.exclude;
+  Include? locatorsInclude = source.nest!.categories.include;
 
   var document = html.parse(response.data);
   for (String locator in locators) {
@@ -26,7 +26,7 @@ Future<Map<String, String>> extractCategoriesCss(JsonSource source, Dio dio) asy
         continue;
       }
       if (element.attributes["href"] == "#") {
-        categories.addAll({element.text: "${source.externalSource!.homePage}/#"});
+        categories.addAll({element.text: "${source.nest!.homePage}/#"});
         continue;
       }
       categories.addAll({element.text: element.attributes["href"]!});
@@ -36,13 +36,13 @@ Future<Map<String, String>> extractCategoriesCss(JsonSource source, Dio dio) asy
     categories.addAll({e.key..trim(): e.value..trim()});
   });
   categories.updateAll((key, value) {
-    return value.toString().replaceFirst("${source.externalSource!.homePage}/", "");
+    return value.toString().replaceFirst("${source.nest!.homePage}/", "");
   });
   return categories;
 }
 
 bool isOnePage(JsonSource source) {
-  var isOnePage = !RegExp(r'\{page\}|\{offset\}').hasMatch(source.externalSource!.categoryUrl);
+  var isOnePage = !RegExp(r'\{page\}|\{offset\}').hasMatch(source.nest!.categoryUrl);
   return isOnePage;
 }
 
@@ -55,18 +55,18 @@ Future<List<Article>> extractCategoryArticlesCss(
   if (isOnePage(source) && page > 1) {
     return [];
   }
-  String? url = "${source.externalSource!.categoryUrl
-      .replaceAll("{home-page}", source.externalSource!.homePage)
+  String? url = "${source.nest!.categoryUrl
+      .replaceAll("{home-page}", source.nest!.homePage)
       .replaceAll("{category}", category.replaceAll(RegExp(r'^/|/$'), ''))
       .replaceAll("{size}", "10")
       .replaceAll("{offset}", "${(page - 1) * 10}")
       .replaceAll("{page}", "$page".replaceAll(RegExp(r'/$'), ''))}/";
-  var locator = source.externalSource!.categoryArticles.locators;
+  var locator = source.nest!.categoryArticles.locators;
   return await extractArticlesCss(
     url,
     locator,
     source,
-    source.externalSource!.categoryArticles,
+    source.nest!.categoryArticles,
     dio
   );
 }
@@ -80,18 +80,18 @@ Future<List<Article>> extractSearchArticlesCss(
   if (isOnePage(source) && page > 1) {
     return [];
   }
-  String? url = source.externalSource!.searchUrl
-      .replaceAll("{home-page}", source.externalSource!.homePage)
+  String? url = source.nest!.searchUrl
+      .replaceAll("{home-page}", source.nest!.homePage)
       .replaceAll("{query}", query)
       .replaceAll("{size}", "10")
       .replaceAll("{offset}", "${(page - 1) * 10}")
       .replaceAll("{page}", "$page");
-  var locator = source.externalSource!.searchArticles.locators;
+  var locator = source.nest!.searchArticles.locators;
   return await extractArticlesCss(
     url,
     locator,
     source,
-    source.externalSource!.searchArticles,
+    source.nest!.searchArticles,
     dio
   );
 }
@@ -128,7 +128,7 @@ Future<List<Article>> extractArticlesCss(
     }
 
     var epoch = getEpochTimeFromElement(
-      source.externalSource!,
+      source.nest!,
       type.dateFormat,
       timeElement,
     );
@@ -172,15 +172,15 @@ Future<Article> extractArticleCss(
   // TODO: only extract if not present already
 
   final response =
-      await getResponse(source.externalSource!, completeUrl(source.externalSource!, article.url), dio);
+      await getResponse(source.nest!, completeUrl(source.nest!, article.url), dio);
   var document = html.parse(response.data);
   var articleContainer =
-      document.body?.querySelector(source.externalSource!.article.locators.container);
+      document.body?.querySelector(source.nest!.article.locators.container);
   if (articleContainer == null) {
     return article;
   }
 
-  var locator = source.externalSource!.article.locators;
+  var locator = source.nest!.article.locators;
   var titleElement = articleContainer.querySelectorOptional(locator.title);
   var authorElement = articleContainer.querySelectorOptional(locator.author);
   var excerptElement = articleContainer.querySelectorOptional(locator.excerpt);
@@ -194,7 +194,7 @@ Future<Article> extractArticleCss(
     var contentElement = articleContainer.querySelectorAll(content_);
     content += contentElement.map((e) => e.outerHtml).join();
 
-    for (var ad in source.externalSource!.ads) {
+    for (var ad in source.nest!.ads) {
       for (var adContent in articleContainer.querySelectorAll(ad)) {
         content.replaceAll(adContent.outerHtml, "");
       }
@@ -261,7 +261,7 @@ Future<Article> extractArticleCss(
   //
   if (epoch == -1) {
     epoch =
-        getEpochTimeFromElement(source.externalSource!, source.externalSource!.article.dateFormat, timeElement);
+        getEpochTimeFromElement(source.nest!, source.nest!.article.dateFormat, timeElement);
   }
 
 

@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:json_path/json_path.dart';
 import 'package:klaws/model/article.dart';
-import 'package:klaws/model/source/source_dart.dart';
+import 'package:klaws/model/source/nest.dart';
 import 'package:klaws/model/source/util.dart';
 import 'package:klaws/repository/json.dart';
 
 Future<Map<String, String>> extractCategoriesJson(JsonSource source) async {
-  Include? locatorsInclude = source.externalSource!.categories.include;
+  Include? locatorsInclude = source.nest!.categories.include;
   return locatorsInclude.json_;
 }
 
@@ -16,8 +16,8 @@ Future<List<Article>> extractCategoryArticlesJson(
   int page,
     Dio dio
 ) async {
-  String? url = source.externalSource!.categoryUrl
-      .replaceAll("{home-page}", source.externalSource!.homePage)
+  String? url = source.nest!.categoryUrl
+      .replaceAll("{home-page}", source.nest!.homePage)
       .replaceAll("{category}", category.replaceAll("/", ""))
       .replaceAll("{size}", "10")
       .replaceAll("{offset}", "${(page - 1) * 10}")
@@ -27,7 +27,7 @@ Future<List<Article>> extractCategoryArticlesJson(
     url,
     source,
     category,
-    source.externalSource!.categoryArticles, dio
+    source.nest!.categoryArticles, dio
   );
 }
 
@@ -37,8 +37,8 @@ Future<List<Article>> extractSearchArticlesJson(
   int page,
     Dio dio
 ) async {
-  String? url = source.externalSource!.searchUrl
-      .replaceAll("{home-page}", source.externalSource!.homePage)
+  String? url = source.nest!.searchUrl
+      .replaceAll("{home-page}", source.nest!.homePage)
       .replaceAll("{query}", query)
       .replaceAll("{size}", "10")
       .replaceAll("{offset}", "${(page - 1) * 10}")
@@ -48,7 +48,7 @@ Future<List<Article>> extractSearchArticlesJson(
     url,
     source,
     query,
-    source.externalSource!.searchArticles, dio
+    source.nest!.searchArticles, dio
   );
 }
 
@@ -59,12 +59,12 @@ Future<Article> extractArticleJson(
 ) async {
   var slug = article.url;
   var url = slug;
-  if (!slug.contains(source.externalSource!.homePage)) {
-    url = source.externalSource!.article.locators.url.replaceAll("{url}", slug);
+  if (!slug.contains(source.nest!.homePage)) {
+    url = source.nest!.article.locators.url.replaceAll("{url}", slug);
   }
-  final response = await dio.get(url, queryParameters: source.externalSource!.headers.json_);
+  final response = await dio.get(url, queryParameters: source.nest!.headers.json_);
 
-  var locator = source.externalSource!.article.locators;
+  var locator = source.nest!.article.locators;
   var titleNode = locator.title.isEmpty ? null : JsonPath(locator.title);
   var authorNode = locator.author.isEmpty ? null : JsonPath(locator.author);
   var thumbnailNode =
@@ -93,12 +93,12 @@ Future<Article> extractArticleJson(
   var epoch = article.publishedAt;
   if (epoch == -1) {
     epoch = getEpochTimeFromString(
-      source.externalSource!.searchArticles.dateFormat,
+      source.nest!.searchArticles.dateFormat,
       timeStr,
     );
   }
 
-  url = source.externalSource!.article.locators.url
+  url = source.nest!.article.locators.url
       .replaceAll("{category}", category)
       .replaceAll("{url}", slug);
 
@@ -127,7 +127,7 @@ Future<List<Article>> extractArticlesJson(
   SourceArticle type,
     Dio dio
 ) async {
-  Response<dynamic> response = await getResponse(source.externalSource!, url, dio);
+  Response<dynamic> response = await getResponse(source.nest!, url, dio);
   var json = response.data;
   List<Article> articleList = [];
 

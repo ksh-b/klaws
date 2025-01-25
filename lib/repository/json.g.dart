@@ -24,7 +24,7 @@ class JsonSourceAdapter extends TypeAdapter<JsonSource> {
       hasCustomSupport: fields[4] as bool,
       iconUrl: fields[5] as String,
       siteCategories: (fields[6] as List).cast<String>(),
-      externalSource: fields[7] as ExternalSource?,
+      nest: fields[7] as Nest?,
     )..otherVersions = (fields[8] as List).cast<Source>();
   }
 
@@ -47,7 +47,7 @@ class JsonSourceAdapter extends TypeAdapter<JsonSource> {
       ..writeByte(6)
       ..write(obj.siteCategories)
       ..writeByte(7)
-      ..write(obj.externalSource)
+      ..write(obj.nest)
       ..writeByte(8)
       ..write(obj.otherVersions);
   }
