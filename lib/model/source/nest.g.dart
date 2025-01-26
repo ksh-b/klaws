@@ -6,7 +6,7 @@ part of 'nest.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ExternalSourceAdapter extends TypeAdapter<Nest> {
+class NestAdapter extends TypeAdapter<Nest> {
   @override
   final int typeId = 5;
 
@@ -71,7 +71,7 @@ class ExternalSourceAdapter extends TypeAdapter<Nest> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ExternalSourceAdapter &&
+      other is NestAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

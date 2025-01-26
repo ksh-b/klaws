@@ -5,7 +5,7 @@ import 'other_version.dart';
 part 'source_json.g.dart';
 
 @HiveType(typeId: 11)
-class ExternalSourceMeta {
+class NestMeta {
   @HiveField(0)
   String name = "";
   @HiveField(1)
@@ -13,13 +13,13 @@ class ExternalSourceMeta {
   @HiveField(2)
   List<OtherVersion> otherversions = [];
 
-  ExternalSourceMeta({
+  NestMeta({
     required this.name,
     required this.file,
     required this.otherversions,
   });
 
-  ExternalSourceMeta.fromJson(dynamic json) {
+  NestMeta.fromJson(dynamic json) {
     name = json['name'];
     file = json['file'];
     if (json['other-versions'] != null) {

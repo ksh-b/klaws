@@ -6,7 +6,7 @@ class ExternalSources {
   String name = "";
   String description = "";
   String changelog = "";
-  List<ExternalSourceMeta> feeds = [];
+  List<NestMeta> feeds = [];
   List<ExternalWatchMeta> watches = [];
 
   ExternalSources({
@@ -24,7 +24,7 @@ class ExternalSources {
     if (json_['feeds'] != null) {
       feeds = [];
       json_['feeds'].forEach((v) {
-        feeds.add(ExternalSourceMeta.fromJson(v));
+        feeds.add(NestMeta.fromJson(v));
       });
     }
     if (json_['watches'] != null) {
