@@ -7,7 +7,7 @@ class Github extends Repo {
 
   @override
   Future<Repo> fetch() async {
-      var response = await Dio().get("https://api.github.com/repos/${Uri.parse(url).path}");
+      var response = await Dio().get("https://api.github.com/repos${Uri.parse(url).path}");
       var dateString = response.data["updated_at"];
       lastUpdate = (DateTime.parse(dateString).millisecondsSinceEpoch / 1000).toInt();
       name = response.data["name"];
