@@ -22,8 +22,7 @@ class Github implements Repo {
   Future<int> lastCommit() async {
     try {
       var response = await Dio().get("https://api.github.com/repos/$repo/commits");
-      var json = jsonDecode(response.data);
-      var dateString = json[0]["commit"]["committer"]["date"];
+      var dateString = response.data[0]["commit"]["committer"]["date"];
       return (DateTime.parse(dateString).millisecondsSinceEpoch / 1000).toInt();
     } catch (e) {
       return -1;
