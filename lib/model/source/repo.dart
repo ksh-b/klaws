@@ -1,25 +1,16 @@
-
-
-import 'package:klaws/repository/git/github.dart';
-
 abstract class Repo {
   Repo(this.url);
 
   String repo="";
-  String url;
-  String get id;
-  String get latestZip;
-  String get zipFolder;
-  String get defaultBranch;
-  String name = "";
-  String description = "";
+  String url="";
+  String name="";
+  String description="";
+  String id="";
+  String latestZip="";
+  String zipFolder="";
+  String defaultBranch="";
+  int lastUpdate=-1;
 
-  Future<int> lastCommit();
+  void fetch();
 
-  static Repo? getRepo(String url) {
-    if (url.contains("github.com")) {
-      return Github(url: url);
-    }
-    return null;
-  }
 }
