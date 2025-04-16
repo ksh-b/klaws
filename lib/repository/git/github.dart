@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:klaws/model/source/repo.dart';
-import 'package:path/path.dart' as path;
 
 class Github extends Repo {
   Github(super.url);
