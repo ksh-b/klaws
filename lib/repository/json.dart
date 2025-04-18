@@ -9,7 +9,6 @@ part 'json.g.dart';
 
 @HiveType(typeId: 22)
 class JsonSource extends Source {
-  Dio dio = Dio();
 
   JsonSource({
     required super.id,
@@ -26,6 +25,7 @@ class JsonSource extends Source {
   Future<Set<Article>> categoryArticles({
     String category = "",
     int page = 1,
+    required Dio dio
   }) async {
     return FeedExtractor().extractCategoryArticles(this, category, dio);
   }
@@ -34,17 +34,18 @@ class JsonSource extends Source {
   Future<Set<Article>> searchedArticles({
     required String searchQuery,
     int page = 1,
+    required Dio dio
   }) async {
     return FeedExtractor().extractSearchArticles(this, searchQuery, dio);
   }
 
   @override
-  Future<Article> article(Article article) async {
+  Future<Article> article(Article article, Dio dio) async {
     return FeedExtractor().extractArticleContent(this, article, dio);
   }
 
   @override
-  Future<Map<String, String>> categories() async {
+  Future<Map<String, String>> categories(Dio dio) async {
     return FeedExtractor().extractCategories(this, dio);
   }
 

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:klaws/model/article.dart';
@@ -38,11 +39,15 @@ class Source {
     this.nest,
   });
 
-  Future<Article> article(Article article) {
+  Future<Article> article(Article article, Dio dio) {
     throw UnimplementedError();
   }
 
-  Future<Set<Article>> articles({required String category, int page = 1}) {
+  Future<Set<Article>> articles({
+    required String category,
+    int page = 1,
+    required Dio dio,
+  }) {
     return category.startsWith("#")
         ? searchedArticles(
           searchQuery:
@@ -50,13 +55,15 @@ class Source {
                   ? category.replaceFirst("#", "")
                   : category,
           page: page,
+          dio: dio,
         )
-        : categoryArticles(category: category, page: page);
+        : categoryArticles(category: category, page: page, dio: dio);
   }
 
   Future<Set<Article>> categoryArticles({
     required String category,
     int page = 1,
+    required Dio dio,
   }) async {
     return <Article>{};
   }
@@ -64,11 +71,12 @@ class Source {
   Future<Set<Article>> searchedArticles({
     required String searchQuery,
     int page = 1,
+    required Dio dio,
   }) async {
     return <Article>{};
   }
 
-  Future<Map<String, String>> categories() async {
+  Future<Map<String, String>> categories(Dio dio) async {
     return {};
   }
 
