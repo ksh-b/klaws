@@ -10,7 +10,7 @@ class Github extends Repo {
       var dateString = response.data["updated_at"];
       lastUpdate = (DateTime.parse(dateString).millisecondsSinceEpoch / 1000).toInt();
       name = response.data["name"];
-      description = response.data["description"];
+      description = response.data["description"] ?? "";
       id = "gh${response.data["id"]}";
       repo = response.data["full_name"];
       url = response.data["html_url"];
