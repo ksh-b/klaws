@@ -8,6 +8,9 @@ Future<Article> extractArticle(
   Article article,
   Dio dio,
 ) async {
+  if(source.nest!=null && source.nest!.headers.json_.isNotEmpty) {
+    dio.options = BaseOptions(headers: source.nest!.headers.json_);
+  }
   var fullArticle = await readability.parseAsync(article.url);
   return Article(
     source: article.source,
