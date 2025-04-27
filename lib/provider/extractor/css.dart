@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as html;
 import 'package:klaws/model/article.dart';
+import 'package:klaws/model/publisher.dart';
 import 'package:klaws/model/source/nest.dart';
 import 'package:klaws/model/source/util.dart';
-import 'package:klaws/repository/json.dart';
 
-Future<Map<String, String>> extractCategoriesCss(JsonSource source, Dio dio) async {
+Future<Map<String, String>> extractCategoriesCss(Source source, Dio dio) async {
   Map<String, String> categories = {};
   final response =
       await dio.get(source.nest!.homePage, queryParameters: source.nest!.headers.json_);
@@ -41,13 +41,13 @@ Future<Map<String, String>> extractCategoriesCss(JsonSource source, Dio dio) asy
   return categories;
 }
 
-bool isOnePage(JsonSource source) {
+bool isOnePage(Source source) {
   var isOnePage = !RegExp(r'\{page\}|\{offset\}').hasMatch(source.nest!.categoryUrl);
   return isOnePage;
 }
 
 Future<List<Article>> extractCategoryArticlesCss(
-  JsonSource source,
+  Source source,
   String category,
   int page,
     Dio dio
@@ -72,7 +72,7 @@ Future<List<Article>> extractCategoryArticlesCss(
 }
 
 Future<List<Article>> extractSearchArticlesCss(
-  JsonSource source,
+  Source source,
   String query,
   int page,
     Dio dio
@@ -99,7 +99,7 @@ Future<List<Article>> extractSearchArticlesCss(
 Future<List<Article>> extractArticlesCss(
   String url,
   Locators locator,
-  JsonSource source,
+  Source source,
   SourceArticle type, Dio dio
 ) async {
   List<Article> articleList = [];
@@ -165,7 +165,7 @@ Future<List<Article>> extractArticlesCss(
 }
 
 Future<Article> extractArticleCss(
-  JsonSource source,
+  Source source,
     Article article,
     Dio dio
 ) async {
