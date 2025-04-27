@@ -102,7 +102,13 @@ Future<Article> extractArticleJson(
       .replaceAll("{category}", category)
       .replaceAll("{url}", slug);
 
-
+  if(!url.startsWith("http")) {
+    if (url.startsWith("/")) {
+      url = source.homePage + url;
+    } else {
+      url = "${source.homePage}/$url";
+    }
+  }
 
   return Article(
     source: source,
