@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:klaws/model/article.dart';
 import 'package:klaws/model/source/nest.dart';
-import 'package:klaws/model/source/sources_json.dart';
 import 'package:klaws/provider/extractor/css.dart';
 import 'package:klaws/provider/extractor/json.dart';
-import 'package:klaws/repository/git/github.dart';
 import 'package:klaws/repository/json.dart';
+
+import 'extractor/readability.dart';
 
 class FeedExtractor {
 
@@ -33,6 +33,8 @@ class FeedExtractor {
       article = (await extractArticleCss(source, article, dio));
     } else if (source.nest?.article.extractor == "json") {
       article = (await extractArticleJson(source, article, dio));
+    } else if (source.nest?.article.extractor == "readability") {
+      article = (await extractArticle(source, article, dio));
     }
     return article;
   }
