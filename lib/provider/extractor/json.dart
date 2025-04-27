@@ -182,11 +182,11 @@ Future<List<Article>> extractArticlesJson(
       time,
     );
 
-    if(!url.startsWith("http")) {
-      if (url.startsWith("/")) {
-        url = source.homePage + url;
+    if(!url_.startsWith("http")) {
+      if (url_.startsWith("/")) {
+        url_ = source.homePage + url_;
       } else {
-        url = "${source.homePage}/$url";
+        url_ = "${source.homePage}/$url_";
       }
     }
 
