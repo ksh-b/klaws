@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:klaws/model/article.dart';
+import 'package:klaws/model/publisher.dart';
 import 'package:klaws/model/source/nest.dart';
 import 'package:klaws/provider/extractor/css.dart';
 import 'package:klaws/provider/extractor/json.dart';
@@ -25,7 +26,7 @@ class FeedExtractor {
   }
 
   Future<Article> extractArticleContent(
-    JsonSource source,
+    Source source,
     Article article,
       Dio dio
   ) async {

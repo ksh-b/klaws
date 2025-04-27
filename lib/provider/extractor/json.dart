@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:json_path/json_path.dart';
 import 'package:klaws/model/article.dart';
+import 'package:klaws/model/publisher.dart';
 import 'package:klaws/model/source/nest.dart';
 import 'package:klaws/model/source/util.dart';
-import 'package:klaws/repository/json.dart';
 
-Future<Map<String, String>> extractCategoriesJson(JsonSource source) async {
+Future<Map<String, String>> extractCategoriesJson(Source source) async {
   Include? locatorsInclude = source.nest!.categories.include;
   return locatorsInclude.json_;
 }
 
 Future<List<Article>> extractCategoryArticlesJson(
-  JsonSource source,
+  Source source,
   String category,
   int page,
     Dio dio
@@ -32,7 +32,7 @@ Future<List<Article>> extractCategoryArticlesJson(
 }
 
 Future<List<Article>> extractSearchArticlesJson(
-  JsonSource source,
+  Source source,
   String query,
   int page,
     Dio dio
@@ -53,7 +53,7 @@ Future<List<Article>> extractSearchArticlesJson(
 }
 
 Future<Article> extractArticleJson(
-  JsonSource source,
+  Source source,
   Article article,
     Dio dio
 ) async {
@@ -128,7 +128,7 @@ Future<Article> extractArticleJson(
 
 Future<List<Article>> extractArticlesJson(
   String url,
-  JsonSource source,
+  Source source,
   String category,
   SourceArticle type,
     Dio dio
