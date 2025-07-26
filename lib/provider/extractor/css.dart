@@ -11,7 +11,7 @@ Future<Map<String, String>> extractCategoriesCss(Source source, Dio dio) async {
   final response =
       await dio.get(source.nest!.homePage, queryParameters: source.nest!.headers.json_);
   var locators = source.nest!.categories.locator;
-  var locatorsExclude = source.nest!.categories.exclude;
+  var locatorsExclude = source.nest!.categories.exclude.map((e) => e.toLowerCase()).toList();
   Include? locatorsInclude = source.nest!.categories.include;
 
   var document = html.parse(response.data);
@@ -21,15 +21,15 @@ Future<Map<String, String>> extractCategoriesCss(Source source, Dio dio) async {
       if (!element.attributes.containsKey("href")) {
         continue;
       }
-      if (locatorsExclude.contains(element.text) ||
-          locatorsExclude.contains(element.attributes["href"])) {
+      if (locatorsExclude.contains(element.text.trim().toLowerCase()) ||
+          locatorsExclude.where((e) => (element.attributes["href"]??"").contains(e)).isNotEmpty) {
         continue;
       }
       if (element.attributes["href"] == "#") {
-        categories.addAll({element.text: "${source.nest!.homePage}/#"});
+        categories.addAll({element.text.trim(): "${source.nest!.homePage}/#"});
         continue;
       }
-      categories.addAll({element.text: element.attributes["href"]!});
+      categories.addAll({element.text.trim(): element.attributes["href"]!});
     }
   }
   locatorsInclude.toJson().entries.forEach((e) {
