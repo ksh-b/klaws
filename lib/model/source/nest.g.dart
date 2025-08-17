@@ -134,7 +134,7 @@ class SourceArticleAdapter extends TypeAdapter<SourceArticle> {
       locators: fields[1] as Locators,
       timezone: fields[2] as String,
       dateFormat: fields[3] as String,
-      modifications: (fields[4] as List).cast<Map<String, String>>(),
+      modifications: (fields[4] as List).cast<Map<String, dynamic>>(),
     );
   }
 

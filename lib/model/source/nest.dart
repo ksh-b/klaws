@@ -132,7 +132,7 @@ class SourceArticle {
   @HiveField(3)
   String dateFormat = "";
   @HiveField(4)
-  List<Map<String, String>> modifications = [];
+  List<Map<String, dynamic>> modifications = [];
 
   SourceArticle({
     required this.extractor,
@@ -149,7 +149,7 @@ class SourceArticle {
     locators = Locators.fromJson(json['locators']);
     timezone = json['timezone'];
     dateFormat = json['date-format'];
-    modifications = json['modifications'].cast<Map<String, String>>();
+    modifications = json['modifications'].cast<Map<String, dynamic>>();
   }
 
   Map<String, dynamic> toJson() {
