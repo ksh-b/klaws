@@ -5,6 +5,7 @@ import 'package:klaws/model/article.dart';
 import 'package:klaws/model/publisher.dart';
 import 'package:klaws/model/source/nest.dart';
 import 'package:klaws/model/source/util.dart';
+import 'package:klaws/util/modifier.dart';
 
 Future<Map<String, String>> extractCategoriesCss(Source source, Dio dio) async {
   Map<String, String> categories = {};
@@ -133,7 +134,7 @@ Future<List<Article>> extractArticlesCss(
       timeElement,
     );
 
-    var thumbnail = thumbnailElement?.attributes['src'];
+    var thumbnail = thumbnailElement?.attributes['src']  ?? '';
     if (thumbnailElement != null) {
       RegExp urlRegex = RegExp(r'https\S*(?:jpg|jpeg|png|webp|gif|svg)');
       var urlMatch = urlRegex.firstMatch(thumbnailElement.outerHtml.toString());
@@ -143,23 +144,50 @@ Future<List<Article>> extractArticlesCss(
       }
     }
 
+    var title = titleElement?.text.trim() ?? '';
+    var author = authorElement?.text.trim() ?? '';
+    var url = urlElement?.attributes['href'] ?? '';
+    var category = categoryElement?.text.trim() ?? '';
+    var publishedAtStr = timeElement?.text.trim() ?? '';
+    var excerpt = excerptElement?.text.trim() ?? '';
 
-    articleList.add(
-      Article(
-        source: source,
-        sourceName: source.name,
-        title: titleElement?.text.trim() ?? '',
-        author: authorElement?.text.trim() ?? '',
-        thumbnail: thumbnail ?? '',
-        url: urlElement?.attributes['href'] ?? '',
-        publishedAt: epoch,
-        publishedAtString: timeElement?.text.trim() ?? '',
-        category: categoryElement?.text.trim() ?? '',
-        content: content,
-        excerpt: excerptElement?.text.trim() ?? '',
-        tags: tags.cast<String>(),
-      ),
-    );
+
+    var modifications = source.nest!.article.modifications;
+    if (modifications.isNotEmpty) {
+      for (var modification in modifications) {
+        var params = modification["params"];
+        switch(modification["value"]) {
+          case "url":
+            Modifier.applyModification(url, modification, params);
+          case "author":
+            Modifier.applyModification(author, modification, params);
+          case "title":
+            Modifier.applyModification(title, modification, params);
+          case "excerpt":
+            Modifier.applyModification(excerpt, modification, params);
+          case "publishedAtStr":
+            Modifier.applyModification(publishedAtStr, modification, params);
+        }
+        if (modification["action"]!="skip") {
+          articleList.add(
+            Article(
+              source: source,
+              sourceName: source.name,
+              title: title,
+              author: author,
+              thumbnail: thumbnail,
+              url: url,
+              publishedAt: epoch,
+              publishedAtString: publishedAtStr,
+              category: category,
+              content: content,
+              excerpt: excerpt,
+              tags: tags.cast<String>(),
+            ),
+          );
+        }
+      }
+    }
   }
   return articleList;
 }
@@ -225,23 +253,6 @@ Future<Article> extractArticleCss(
   var category = categoryElement?.text.trim() ?? article.category;
 
   int epoch = article.publishedAt;
-
-  // modifications
-  // if (source.externalSource!.article.modifications.isNotEmpty) {
-  //   source.externalSource!.article.modifications
-  //       .join()
-  //       .replaceAll("{title}", title)
-  //       .replaceAll("{excerpt}", excerpt)
-  //       .replaceAll("{author}", author)
-  //       .replaceAll("{url}", url)
-  //       .replaceAll("{time}", time)
-  //       .replaceAll("{category}", category);
-  //
-  //   String modTime = eval(
-  //     source.externalSource!.article.modifications.join().split("=")[1],
-  //   );
-  //   epoch = getEpochTimeFromString(source.externalSource!.article.dateFormat, modTime);
-  // }
 
   // if (results.containsKey('title')) {
   //   title = results['title'];

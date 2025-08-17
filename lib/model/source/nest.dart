@@ -132,7 +132,7 @@ class SourceArticle {
   @HiveField(3)
   String dateFormat = "";
   @HiveField(4)
-  List<Map<String, String>> modifications = [];
+  List<Map<String, dynamic>> modifications = [];
 
   SourceArticle({
     required this.extractor,
