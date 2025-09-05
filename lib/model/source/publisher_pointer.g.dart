@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'source_json.dart';
+part of 'publisher_pointer.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NestMetaAdapter extends TypeAdapter<NestMeta> {
+class PublisherPointerAdapter extends TypeAdapter<PublisherPointer> {
   @override
   final int typeId = 11;
 
   @override
-  NestMeta read(BinaryReader reader) {
+  PublisherPointer read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return NestMeta(
+    return PublisherPointer(
       name: fields[0] as String,
       file: fields[1] as String,
       otherversions: (fields[2] as List).cast<OtherVersion>(),
@@ -24,7 +24,7 @@ class NestMetaAdapter extends TypeAdapter<NestMeta> {
   }
 
   @override
-  void write(BinaryWriter writer, NestMeta obj) {
+  void write(BinaryWriter writer, PublisherPointer obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)
@@ -41,7 +41,7 @@ class NestMetaAdapter extends TypeAdapter<NestMeta> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is NestMetaAdapter &&
+      other is PublisherPointerAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -1,10 +1,10 @@
 
 import 'package:hive_ce/hive.dart';
 
-part 'nest.g.dart';
+part 'metadata.g.dart';
 
 @HiveType(typeId: 5)
-class Nest {
+class JsonMetadata {
 
   @HiveField(0)
   String name = "";
@@ -33,7 +33,7 @@ class Nest {
   @HiveField(12)
   List<String> ads = [];
 
-  Nest({
+  JsonMetadata({
     required this.name,
     required this.homePage,
     required this.iconUrl,
@@ -49,7 +49,7 @@ class Nest {
     required this.ads,
   });
 
-  Nest.fromJson(Map<String, dynamic> json) {
+  JsonMetadata.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     homePage = json['home-page'];
     iconUrl = json['icon-url'];

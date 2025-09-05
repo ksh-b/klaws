@@ -2,13 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:klaws/model/article.dart';
-import 'package:klaws/model/source/nest.dart';
+import 'package:klaws/model/source/metadata.dart';
 
 part 'publisher.g.dart';
 
 @JsonSerializable()
 @HiveType(typeId: 4)
-class Source {
+class Publisher {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -24,11 +24,11 @@ class Source {
   @HiveField(6)
   final List<String> siteCategories;
   @HiveField(7)
-  final Nest? nest;
+  final JsonMetadata? metadata;
   @HiveField(8)
-  List<Source> otherVersions = [];
+  List<Publisher> otherVersions = [];
 
-  Source({
+  Publisher({
     required this.id,
     required this.name,
     required this.homePage,
@@ -36,7 +36,7 @@ class Source {
     required this.hasCustomSupport,
     required this.iconUrl,
     required this.siteCategories,
-    this.nest,
+    this.metadata,
   });
 
   Future<Article> article(Article article, Dio dio) {
@@ -80,7 +80,7 @@ class Source {
     return {};
   }
 
-  factory Source.fromJson(Map<String, dynamic> json) => _$SourceFromJson(json);
+  factory Publisher.fromJson(Map<String, dynamic> json) => _$SourceFromJson(json);
 
   Map<String, dynamic> toJson() => _$SourceToJson(this);
 }

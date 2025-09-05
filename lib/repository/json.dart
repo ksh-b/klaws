@@ -2,15 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:klaws/model/article.dart';
 import 'package:klaws/model/publisher.dart';
-import 'package:klaws/model/source/nest.dart';
+import 'package:klaws/model/source/metadata.dart';
 import 'package:klaws/provider/feed_extractor.dart';
 
 part 'json.g.dart';
 
 @HiveType(typeId: 22)
-class JsonSource extends Source {
+class PublisherFromJson extends Publisher {
 
-  JsonSource({
+  PublisherFromJson({
     required super.id,
     required super.name,
     required super.homePage,
@@ -18,7 +18,7 @@ class JsonSource extends Source {
     required super.hasCustomSupport,
     required super.iconUrl,
     required super.siteCategories,
-    required super.nest,
+    required super.metadata,
   });
 
   @override

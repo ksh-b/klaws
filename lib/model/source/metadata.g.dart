@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'nest.dart';
+part of 'metadata.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class NestAdapter extends TypeAdapter<Nest> {
+class NestAdapter extends TypeAdapter<JsonMetadata> {
   @override
   final int typeId = 5;
 
   @override
-  Nest read(BinaryReader reader) {
+  JsonMetadata read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Nest(
+    return JsonMetadata(
       name: fields[0] as String,
       homePage: fields[1] as String,
       iconUrl: fields[5] as String,
@@ -34,7 +34,7 @@ class NestAdapter extends TypeAdapter<Nest> {
   }
 
   @override
-  void write(BinaryWriter writer, Nest obj) {
+  void write(BinaryWriter writer, JsonMetadata obj) {
     writer
       ..writeByte(13)
       ..writeByte(0)

@@ -4,7 +4,7 @@ import 'package:hive_ce/hive.dart';
 part 'watch_dart.g.dart';
 
 @HiveType(typeId: 16)
-class WatchImport {
+class Watch {
   @HiveField(0)
   String name="";
   @HiveField(1)
@@ -18,7 +18,7 @@ class WatchImport {
   @HiveField(5)
   Items? items;
 
-  WatchImport({
+  Watch({
     required this.name,
     required this.description,
     required this.category,
@@ -27,8 +27,8 @@ class WatchImport {
     required this.items,
   });
 
-  factory WatchImport.fromJson(Map<String, dynamic> json) {
-    return WatchImport(
+  factory Watch.fromJson(Map<String, dynamic> json) {
+    return Watch(
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       category: json['category'] ?? '',

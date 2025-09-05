@@ -6,17 +6,17 @@ part of 'publisher.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class SourceAdapter extends TypeAdapter<Source> {
+class SourceAdapter extends TypeAdapter<Publisher> {
   @override
   final int typeId = 4;
 
   @override
-  Source read(BinaryReader reader) {
+  Publisher read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Source(
+    return Publisher(
       id: fields[0] as String,
       name: fields[1] as String,
       homePage: fields[2] as String,
@@ -24,12 +24,12 @@ class SourceAdapter extends TypeAdapter<Source> {
       hasCustomSupport: fields[4] as bool,
       iconUrl: fields[5] as String,
       siteCategories: (fields[6] as List).cast<String>(),
-      nest: fields[7] as Nest?,
-    )..otherVersions = (fields[8] as List).cast<Source>();
+      metadata: fields[7] as JsonMetadata?,
+    )..otherVersions = (fields[8] as List).cast<Publisher>();
   }
 
   @override
-  void write(BinaryWriter writer, Source obj) {
+  void write(BinaryWriter writer, Publisher obj) {
     writer
       ..writeByte(9)
       ..writeByte(0)
@@ -47,7 +47,7 @@ class SourceAdapter extends TypeAdapter<Source> {
       ..writeByte(6)
       ..write(obj.siteCategories)
       ..writeByte(7)
-      ..write(obj.nest)
+      ..write(obj.metadata)
       ..writeByte(8)
       ..write(obj.otherVersions);
   }
@@ -67,7 +67,7 @@ class SourceAdapter extends TypeAdapter<Source> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-Source _$SourceFromJson(Map<String, dynamic> json) => Source(
+Publisher _$SourceFromJson(Map<String, dynamic> json) => Publisher(
       id: json['id'] as String,
       name: json['name'] as String,
       homePage: json['homePage'] as String,
@@ -77,15 +77,15 @@ Source _$SourceFromJson(Map<String, dynamic> json) => Source(
       siteCategories: (json['siteCategories'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      nest: json['externalSource'] == null
+      metadata: json['externalSource'] == null
           ? null
-          : Nest.fromJson(
+          : JsonMetadata.fromJson(
               json['externalSource'] as Map<String, dynamic>),
     )..otherVersions = (json['otherVersions'] as List<dynamic>)
-        .map((e) => Source.fromJson(e as Map<String, dynamic>))
+        .map((e) => Publisher.fromJson(e as Map<String, dynamic>))
         .toList();
 
-Map<String, dynamic> _$SourceToJson(Source instance) => <String, dynamic>{
+Map<String, dynamic> _$SourceToJson(Publisher instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'homePage': instance.homePage,
@@ -93,6 +93,6 @@ Map<String, dynamic> _$SourceToJson(Source instance) => <String, dynamic>{
       'hasCustomSupport': instance.hasCustomSupport,
       'iconUrl': instance.iconUrl,
       'siteCategories': instance.siteCategories,
-      'externalSource': instance.nest,
+      'externalSource': instance.metadata,
       'otherVersions': instance.otherVersions,
     };

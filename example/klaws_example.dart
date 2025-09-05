@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:klaws/klaws.dart';
 import 'package:klaws/model/article.dart';
-import 'package:klaws/model/source/nest.dart';
+import 'package:klaws/model/source/metadata.dart';
 import 'package:klaws/repository/json.dart';
 
 void main() async {
@@ -12,8 +12,8 @@ void main() async {
   final response = await dio.get(
     'https://raw.githubusercontent.com/ksh-b/corax/refs/heads/main/feeds/news/technology/android_police.json',
   );
-  Nest externalSource = Nest.fromJson(jsonDecode(response.data));
-  JsonSource jsonSource = JsonSource(
+  JsonMetadata externalSource = JsonMetadata.fromJson(jsonDecode(response.data));
+  PublisherFromJson jsonSource = PublisherFromJson(
     id: "test",
     name: externalSource.name,
     homePage: externalSource.homePage,
@@ -21,7 +21,7 @@ void main() async {
     hasCustomSupport: externalSource.supportsCustomCategory,
     iconUrl: externalSource.iconUrl,
     siteCategories: externalSource.category,
-    nest: externalSource,
+    metadata: externalSource,
   );
   Map<String, String> categories = await extractor.extractCategories(jsonSource, dio);
   print(categories);

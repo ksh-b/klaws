@@ -2,10 +2,12 @@ import 'package:hive_ce/hive.dart';
 
 import 'other_version.dart';
 
-part 'source_json.g.dart';
+part 'publisher_pointer.g.dart';
 
 @HiveType(typeId: 11)
-class NestMeta {
+
+// publishers.json
+class PublisherPointer {
   @HiveField(0)
   String name = "";
   @HiveField(1)
@@ -13,13 +15,13 @@ class NestMeta {
   @HiveField(2)
   List<OtherVersion> otherversions = [];
 
-  NestMeta({
+  PublisherPointer({
     required this.name,
     required this.file,
     required this.otherversions,
   });
 
-  NestMeta.fromJson(dynamic json) {
+  PublisherPointer.fromJson(dynamic json) {
     name = json['name'];
     file = json['file'];
     if (json['other-versions'] != null) {

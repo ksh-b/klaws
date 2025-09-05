@@ -6,17 +6,17 @@ part of 'json.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class JsonSourceAdapter extends TypeAdapter<JsonSource> {
+class JsonSourceAdapter extends TypeAdapter<PublisherFromJson> {
   @override
   final int typeId = 14;
 
   @override
-  JsonSource read(BinaryReader reader) {
+  PublisherFromJson read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return JsonSource(
+    return PublisherFromJson(
       id: fields[0] as String,
       name: fields[1] as String,
       homePage: fields[2] as String,
@@ -24,12 +24,12 @@ class JsonSourceAdapter extends TypeAdapter<JsonSource> {
       hasCustomSupport: fields[4] as bool,
       iconUrl: fields[5] as String,
       siteCategories: (fields[6] as List).cast<String>(),
-      nest: fields[7] as Nest?,
-    )..otherVersions = (fields[8] as List).cast<Source>();
+      metadata: fields[7] as JsonMetadata?,
+    )..otherVersions = (fields[8] as List).cast<Publisher>();
   }
 
   @override
-  void write(BinaryWriter writer, JsonSource obj) {
+  void write(BinaryWriter writer, PublisherFromJson obj) {
     writer
       ..writeByte(9)
       ..writeByte(0)
@@ -47,7 +47,7 @@ class JsonSourceAdapter extends TypeAdapter<JsonSource> {
       ..writeByte(6)
       ..write(obj.siteCategories)
       ..writeByte(7)
-      ..write(obj.nest)
+      ..write(obj.metadata)
       ..writeByte(8)
       ..write(obj.otherVersions);
   }

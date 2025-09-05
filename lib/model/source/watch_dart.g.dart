@@ -6,17 +6,17 @@ part of 'watch_dart.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class WatchImportAdapter extends TypeAdapter<WatchImport> {
+class WatchImportAdapter extends TypeAdapter<Watch> {
   @override
   final int typeId = 16;
 
   @override
-  WatchImport read(BinaryReader reader) {
+  Watch read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return WatchImport(
+    return Watch(
       name: fields[0] as String,
       description: fields[1] as String,
       category: fields[2] as String,
@@ -27,7 +27,7 @@ class WatchImportAdapter extends TypeAdapter<WatchImport> {
   }
 
   @override
-  void write(BinaryWriter writer, WatchImport obj) {
+  void write(BinaryWriter writer, Watch obj) {
     writer
       ..writeByte(6)
       ..writeByte(0)

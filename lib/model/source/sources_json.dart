@@ -1,36 +1,36 @@
-import 'package:klaws/model/source/watch_json.dart';
+import 'package:klaws/model/source/watch_pointer.dart';
 
-import 'source_json.dart';
+import 'publisher_pointer.dart';
 
-class ExternalSources {
+class Pointers {
   String name = "";
   String description = "";
   String changelog = "";
-  List<NestMeta> feeds = [];
-  List<ExternalWatchMeta> watches = [];
+  List<PublisherPointer> publisherPointers = [];
+  List<WatchPointer> watchPointers = [];
 
-  ExternalSources({
+  Pointers({
     required this.name,
     required this.description,
     required this.changelog,
-    required this.feeds,
-    required this.watches,
+    required this.publisherPointers,
+    required this.watchPointers,
   });
 
-  ExternalSources.fromJson(dynamic json_) {
+  Pointers.fromJson(dynamic json_) {
     name = json_['name'];
     description = json_['description'];
     changelog = json_['changelog'];
-    if (json_['feeds'] != null) {
-      feeds = [];
-      json_['feeds'].forEach((v) {
-        feeds.add(NestMeta.fromJson(v));
+    if (json_['publishers'] != null) {
+      publisherPointers = [];
+      json_['publishers'].forEach((v) {
+        publisherPointers.add(PublisherPointer.fromJson(v));
       });
     }
     if (json_['watches'] != null) {
-      watches = [];
+      watchPointers = [];
       json_['watches'].forEach((v) {
-        watches.add(ExternalWatchMeta.fromJson(v));
+        watchPointers.add(WatchPointer.fromJson(v));
       });
     }
   }
@@ -40,7 +40,7 @@ class ExternalSources {
     map['name'] = name;
     map['description'] = description;
     map['changelog'] = changelog;
-    map['sources'] = feeds.map((v) => v.toJson()).toList();
+    map['publishers'] = publisherPointers.map((v) => v.toJson()).toList();
       return map;
   }
 }

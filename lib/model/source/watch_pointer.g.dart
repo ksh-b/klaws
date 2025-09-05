@@ -1,29 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'watch_json.dart';
+part of 'watch_pointer.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ExternalWatchMetaAdapter extends TypeAdapter<ExternalWatchMeta> {
+class ExternalWatchMetaAdapter extends TypeAdapter<WatchPointer> {
   @override
   final int typeId = 16;
 
   @override
-  ExternalWatchMeta read(BinaryReader reader) {
+  WatchPointer read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ExternalWatchMeta(
+    return WatchPointer(
       name: fields[0] as String,
       file: fields[1] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, ExternalWatchMeta obj) {
+  void write(BinaryWriter writer, WatchPointer obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)

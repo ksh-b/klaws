@@ -6,7 +6,7 @@ import 'package:klaws/model/watch.dart';
 
 class WatchExtractor {
   Future<Items?> extractWatchContent(
-    Watch watch,
+    WatchProducer watch,
     String url,
       Dio dio,
   ) async {

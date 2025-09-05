@@ -2,9 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:intl/intl.dart';
 import 'package:json_path/json_path.dart';
-import 'package:klaws/model/source/nest.dart';
+import 'package:klaws/model/source/metadata.dart';
 
-int getEpochTimeFromElement(Nest source, String dateFormat, Element? dateElement) {
+int getEpochTimeFromElement(JsonMetadata source, String dateFormat, Element? dateElement) {
   var epoch = -1;
   if(dateElement==null) {
     return epoch;
@@ -116,7 +116,7 @@ int getEpochTimeFromString(String dateFormat, String dateString) {
   return epoch;
 }
 
-String completeUrl (Nest source, String url, {String? category}) {
+String completeUrl (JsonMetadata source, String url, {String? category}) {
   if(!url.startsWith("http") && !url.contains(source.homePage)) {
     if (!url.startsWith("/")) {
       url = "/$url";
@@ -126,7 +126,7 @@ String completeUrl (Nest source, String url, {String? category}) {
   return url;
 }
 
-Future<Response<dynamic>> getResponse(Nest source, String url, Dio dio) async {
+Future<Response<dynamic>> getResponse(JsonMetadata source, String url, Dio dio) async {
   Map<String, List<String>> responseHeaders = {};
   if(source.headers.json_.containsKey("Cookie")) {
     if(source.headers.json_["Cookie"].isEmpty) {

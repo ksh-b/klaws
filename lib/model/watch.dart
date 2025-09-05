@@ -7,18 +7,18 @@ part 'watch.g.dart';
 
 @JsonSerializable()
 @HiveType(typeId: 17)
-class Watch {
+class WatchProducer {
   @HiveField(0)
   final String id;
   @HiveField(1)
-  final WatchImport watch;
+  final Watch watch;
 
-  Watch({
+  WatchProducer({
     required this.id,
     required this.watch,
   });
 
-  factory Watch.fromJson(Map<String, dynamic> json) => _$WatchFromJson(json);
+  factory WatchProducer.fromJson(Map<String, dynamic> json) => _$WatchFromJson(json);
 
   Map<String, dynamic> toJson() => _$WatchToJson(this);
 

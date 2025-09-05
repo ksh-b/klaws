@@ -1,20 +1,20 @@
 import 'package:hive_ce/hive.dart';
 
-part 'watch_json.g.dart';
+part 'watch_pointer.g.dart';
 
 @HiveType(typeId: 16)
-class ExternalWatchMeta {
+class WatchPointer {
   @HiveField(0)
   String name = "";
   @HiveField(1)
   String file = "";
 
-  ExternalWatchMeta({
+  WatchPointer({
     required this.name,
     required this.file,
   });
 
-  ExternalWatchMeta.fromJson(dynamic json) {
+  WatchPointer.fromJson(dynamic json) {
     name = json['name'];
     file = json['file'];
   }

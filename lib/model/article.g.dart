@@ -17,8 +17,8 @@ class ArticleAdapter extends TypeAdapter<Article> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Article(
-      source: fields[0] as Source,
-      sourceName: fields[1] as String,
+      publisher: fields[0] as Publisher,
+      name: fields[1] as String,
       title: fields[2] as String,
       content: fields[3] as String,
       excerpt: fields[4] as String,
@@ -37,9 +37,9 @@ class ArticleAdapter extends TypeAdapter<Article> {
     writer
       ..writeByte(13)
       ..writeByte(0)
-      ..write(obj.source)
+      ..write(obj.publisher)
       ..writeByte(1)
-      ..write(obj.sourceName)
+      ..write(obj.name)
       ..writeByte(2)
       ..write(obj.title)
       ..writeByte(3)
@@ -80,8 +80,8 @@ class ArticleAdapter extends TypeAdapter<Article> {
 // **************************************************************************
 
 Article _$ArticleFromJson(Map<String, dynamic> json) => Article(
-      source: Source.fromJson(json['source'] as Map<String, dynamic>),
-      sourceName: json['sourceName'] as String,
+      publisher: Publisher.fromJson(json['source'] as Map<String, dynamic>),
+      name: json['sourceName'] as String,
       title: json['title'] as String,
       content: json['content'] as String,
       excerpt: json['excerpt'] as String,
@@ -95,8 +95,8 @@ Article _$ArticleFromJson(Map<String, dynamic> json) => Article(
     )..metadata = Map<String, String>.from(json['metadata'] as Map);
 
 Map<String, dynamic> _$ArticleToJson(Article instance) => <String, dynamic>{
-      'source': instance.source,
-      'sourceName': instance.sourceName,
+      'source': instance.publisher,
+      'sourceName': instance.name,
       'title': instance.title,
       'content': instance.content,
       'excerpt': instance.excerpt,

@@ -15,9 +15,9 @@ enum Metadata {
 @HiveType(typeId: 1)
 class Article {
   @HiveField(0)
-  Source source;
+  Publisher publisher;
   @HiveField(1)
-  String sourceName;
+  String name;
   @HiveField(2)
   String title;
   @HiveField(3)
@@ -42,8 +42,8 @@ class Article {
   Map<String, String> metadata = {};
 
   Article({
-    required this.source,
-    required this.sourceName,
+    required this.publisher,
+    required this.name,
     required this.title,
     required this.content,
     required this.excerpt,
@@ -70,8 +70,8 @@ class Article {
     String? category,
   }) {
     return Article(
-      source: source,
-      sourceName: sourceName,
+      publisher: publisher,
+      name: name,
       title: title ?? this.title,
       content: content ?? this.content,
       excerpt: excerpt ?? this.excerpt,
@@ -95,10 +95,10 @@ class Article {
         other is Article &&
             runtimeType == other.runtimeType &&
             title == other.title &&
-            source.id == other.source.id;
+            publisher.id == other.publisher.id;
   }
 
   @override
-  int get hashCode => title.hashCode ^ source.id.hashCode;
+  int get hashCode => title.hashCode ^ publisher.id.hashCode;
 
 }

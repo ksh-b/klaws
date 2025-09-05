@@ -3,17 +3,17 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart' as html;
 import 'package:klaws/model/article.dart';
 import 'package:klaws/model/publisher.dart';
-import 'package:klaws/model/source/nest.dart';
-import 'package:klaws/model/source/util.dart';
+import 'package:klaws/model/source/metadata.dart';
+import 'package:klaws/util/util.dart';
 import 'package:klaws/util/modifier.dart';
 
-Future<Map<String, String>> extractCategoriesCss(Source source, Dio dio) async {
+Future<Map<String, String>> extractCategoriesCss(Publisher source, Dio dio) async {
   Map<String, String> categories = {};
   final response =
-      await dio.get(source.nest!.homePage, queryParameters: source.nest!.headers.json_);
-  var locators = source.nest!.categories.locator;
-  var locatorsExclude = source.nest!.categories.exclude.map((e) => e.toLowerCase()).toList();
-  Include? locatorsInclude = source.nest!.categories.include;
+      await dio.get(source.metadata!.homePage, queryParameters: source.metadata!.headers.json_);
+  var locators = source.metadata!.categories.locator;
+  var locatorsExclude = source.metadata!.categories.exclude.map((e) => e.toLowerCase()).toList();
+  Include? locatorsInclude = source.metadata!.categories.include;
 
   var document = html.parse(response.data);
   for (String locator in locators) {
@@ -27,7 +27,7 @@ Future<Map<String, String>> extractCategoriesCss(Source source, Dio dio) async {
         continue;
       }
       if (element.attributes["href"] == "#") {
-        categories.addAll({element.text.trim(): "${source.nest!.homePage}/#"});
+        categories.addAll({element.text.trim(): "${source.metadata!.homePage}/#"});
         continue;
       }
       categories.addAll({element.text.trim(): element.attributes["href"]!});
@@ -37,18 +37,18 @@ Future<Map<String, String>> extractCategoriesCss(Source source, Dio dio) async {
     categories.addAll({e.key..trim(): e.value..trim()});
   });
   categories.updateAll((key, value) {
-    return value.toString().replaceFirst("${source.nest!.homePage}/", "");
+    return value.toString().replaceFirst("${source.metadata!.homePage}/", "");
   });
   return categories;
 }
 
-bool isOnePage(Source source) {
-  var isOnePage = !RegExp(r'\{page\}|\{offset\}').hasMatch(source.nest!.categoryUrl);
+bool isOnePage(Publisher source) {
+  var isOnePage = !RegExp(r'\{page\}|\{offset\}').hasMatch(source.metadata!.categoryUrl);
   return isOnePage;
 }
 
 Future<List<Article>> extractCategoryArticlesCss(
-  Source source,
+  Publisher source,
   String category,
   int page,
     Dio dio
@@ -56,24 +56,24 @@ Future<List<Article>> extractCategoryArticlesCss(
   if (isOnePage(source) && page > 1) {
     return [];
   }
-  String? url = "${source.nest!.categoryUrl
-      .replaceAll("{home-page}", source.nest!.homePage)
+  String? url = "${source.metadata!.categoryUrl
+      .replaceAll("{home-page}", source.metadata!.homePage)
       .replaceAll("{category}", category.replaceAll(RegExp(r'^/|/$'), ''))
       .replaceAll("{size}", "10")
       .replaceAll("{offset}", "${(page - 1) * 10}")
       .replaceAll("{page}", "$page".replaceAll(RegExp(r'/$'), ''))}/";
-  var locator = source.nest!.categoryArticles.locators;
+  var locator = source.metadata!.categoryArticles.locators;
   return await extractArticlesCss(
     url,
     locator,
     source,
-    source.nest!.categoryArticles,
+    source.metadata!.categoryArticles,
     dio
   );
 }
 
 Future<List<Article>> extractSearchArticlesCss(
-  Source source,
+  Publisher source,
   String query,
   int page,
     Dio dio
@@ -81,18 +81,18 @@ Future<List<Article>> extractSearchArticlesCss(
   if (isOnePage(source) && page > 1) {
     return [];
   }
-  String? url = source.nest!.searchUrl
-      .replaceAll("{home-page}", source.nest!.homePage)
+  String? url = source.metadata!.searchUrl
+      .replaceAll("{home-page}", source.metadata!.homePage)
       .replaceAll("{query}", query)
       .replaceAll("{size}", "10")
       .replaceAll("{offset}", "${(page - 1) * 10}")
       .replaceAll("{page}", "$page");
-  var locator = source.nest!.searchArticles.locators;
+  var locator = source.metadata!.searchArticles.locators;
   return await extractArticlesCss(
     url,
     locator,
     source,
-    source.nest!.searchArticles,
+    source.metadata!.searchArticles,
     dio
   );
 }
@@ -100,7 +100,7 @@ Future<List<Article>> extractSearchArticlesCss(
 Future<List<Article>> extractArticlesCss(
   String url,
   Locators locator,
-  Source source,
+  Publisher source,
   SourceArticle type, Dio dio
 ) async {
   List<Article> articleList = [];
@@ -129,7 +129,7 @@ Future<List<Article>> extractArticlesCss(
     }
 
     var epoch = getEpochTimeFromElement(
-      source.nest!,
+      source.metadata!,
       type.dateFormat,
       timeElement,
     );
@@ -152,63 +152,62 @@ Future<List<Article>> extractArticlesCss(
     var excerpt = excerptElement?.text.trim() ?? '';
 
 
-    var modifications = source.nest!.article.modifications;
-    if (modifications.isNotEmpty) {
-      for (var modification in modifications) {
-        var params = modification["params"];
-        switch(modification["value"]) {
-          case "url":
-            Modifier.applyModification(url, modification, params);
-          case "author":
-            Modifier.applyModification(author, modification, params);
-          case "title":
-            Modifier.applyModification(title, modification, params);
-          case "excerpt":
-            Modifier.applyModification(excerpt, modification, params);
-          case "publishedAtStr":
-            Modifier.applyModification(publishedAtStr, modification, params);
-        }
-        if (modification["action"]!="skip") {
-          articleList.add(
-            Article(
-              source: source,
-              sourceName: source.name,
-              title: title,
-              author: author,
-              thumbnail: thumbnail,
-              url: url,
-              publishedAt: epoch,
-              publishedAtString: publishedAtStr,
-              category: category,
-              content: content,
-              excerpt: excerpt,
-              tags: tags.cast<String>(),
-            ),
-          );
-        }
+    var modifications = source.metadata!.article.modifications;
+    List<String> skippable = [];
+    for (var modification in modifications) {
+      var params = modification["params"];
+      switch(modification["value"]) {
+        case "url":
+          Modifier.applyModification(url, modification, params);
+        case "author":
+          Modifier.applyModification(author, modification, params);
+        case "title":
+          Modifier.applyModification(title, modification, params);
+        case "excerpt":
+          Modifier.applyModification(excerpt, modification, params);
+        case "publishedAtStr":
+          Modifier.applyModification(publishedAtStr, modification, params);
       }
+    }
+    if (!skippable.contains(url)) {
+      articleList.add(
+        Article(
+          publisher: source,
+          name: source.name,
+          title: title,
+          author: author,
+          thumbnail: thumbnail,
+          url: url,
+          publishedAt: epoch,
+          publishedAtString: publishedAtStr,
+          category: category,
+          content: content,
+          excerpt: excerpt,
+          tags: tags.cast<String>(),
+        ),
+      );
     }
   }
   return articleList;
 }
 
 Future<Article> extractArticleCss(
-  Source source,
+  Publisher source,
     Article article,
     Dio dio
 ) async {
   // TODO: only extract if not present already
 
   final response =
-      await getResponse(source.nest!, completeUrl(source.nest!, article.url), dio);
+      await getResponse(source.metadata!, completeUrl(source.metadata!, article.url), dio);
   var document = html.parse(response.data);
   var articleContainer =
-      document.body?.querySelector(source.nest!.article.locators.container);
+      document.body?.querySelector(source.metadata!.article.locators.container);
   if (articleContainer == null) {
     return article;
   }
 
-  var locator = source.nest!.article.locators;
+  var locator = source.metadata!.article.locators;
   var titleElement = articleContainer.querySelectorOptional(locator.title);
   var authorElement = articleContainer.querySelectorOptional(locator.author);
   var excerptElement = articleContainer.querySelectorOptional(locator.excerpt);
@@ -222,7 +221,7 @@ Future<Article> extractArticleCss(
     var contentElement = articleContainer.querySelectorAll(content_);
     content += contentElement.map((e) => e.outerHtml).join();
 
-    for (var ad in source.nest!.ads) {
+    for (var ad in source.metadata!.ads) {
       for (var adContent in articleContainer.querySelectorAll(ad)) {
         content.replaceAll(adContent.outerHtml, "");
       }
@@ -272,14 +271,14 @@ Future<Article> extractArticleCss(
   //
   if (epoch == -1) {
     epoch =
-        getEpochTimeFromElement(source.nest!, source.nest!.article.dateFormat, timeElement);
+        getEpochTimeFromElement(source.metadata!, source.metadata!.article.dateFormat, timeElement);
   }
 
 
 
   return Article(
-    source: source,
-    sourceName: source.name,
+    publisher: source,
+    name: source.name,
     title: title,
     author: author,
     thumbnail: thumbnail,
