@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:klaws/model/article.dart';
-import 'package:klaws/model/source/metadata.dart';
+import 'package:klaws/model/publisher/article.dart';
+import 'package:klaws/model/publisher/metadata.dart';
 
 part 'publisher.g.dart';
 
@@ -24,7 +24,7 @@ class Publisher {
   @HiveField(6)
   final List<String> siteCategories;
   @HiveField(7)
-  final JsonMetadata? metadata;
+  final PublisherMetadata? metadata;
   @HiveField(8)
   List<Publisher> otherVersions = [];
 

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
-import 'package:klaws/model/article.dart';
-import 'package:klaws/model/publisher.dart';
+import 'package:klaws/model/publisher/article.dart';
+import 'package:klaws/model/publisher/publisher.dart';
 import 'package:xayn_readability_core/xayn_readability_core.dart' as readability;
 
 Future<Article> extractArticle(

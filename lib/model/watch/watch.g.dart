@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'watch_dart.dart';
+part of 'watch.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator

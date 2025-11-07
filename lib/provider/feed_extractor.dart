@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:klaws/model/article.dart';
-import 'package:klaws/model/publisher.dart';
-import 'package:klaws/model/source/metadata.dart';
+import 'package:klaws/model/publisher/article.dart';
+import 'package:klaws/model/publisher/publisher.dart';
+import 'package:klaws/model/publisher/metadata.dart';
 import 'package:klaws/provider/extractor/css.dart';
 import 'package:klaws/provider/extractor/json.dart';
-import 'package:klaws/repository/json.dart';
 
 import 'extractor/readability.dart';
 

@@ -3,8 +3,9 @@ import 'package:hive_ce/hive.dart';
 
 part 'metadata.g.dart';
 
+// Publisher from JSON files
 @HiveType(typeId: 5)
-class JsonMetadata {
+class PublisherMetadata {
 
   @HiveField(0)
   String name = "";
@@ -33,7 +34,7 @@ class JsonMetadata {
   @HiveField(12)
   List<String> ads = [];
 
-  JsonMetadata({
+  PublisherMetadata({
     required this.name,
     required this.homePage,
     required this.iconUrl,
@@ -49,7 +50,7 @@ class JsonMetadata {
     required this.ads,
   });
 
-  JsonMetadata.fromJson(Map<String, dynamic> json) {
+  PublisherMetadata.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     homePage = json['home-page'];
     iconUrl = json['icon-url'];

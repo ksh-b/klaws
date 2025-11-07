@@ -25,6 +25,4 @@ class Modifier {
         return target;
     }
   }
-
-
 }

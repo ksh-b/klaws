@@ -24,7 +24,7 @@ class SourceAdapter extends TypeAdapter<Publisher> {
       hasCustomSupport: fields[4] as bool,
       iconUrl: fields[5] as String,
       siteCategories: (fields[6] as List).cast<String>(),
-      metadata: fields[7] as JsonMetadata?,
+      metadata: fields[7] as PublisherMetadata?,
     )..otherVersions = (fields[8] as List).cast<Publisher>();
   }
 
@@ -79,7 +79,7 @@ Publisher _$SourceFromJson(Map<String, dynamic> json) => Publisher(
           .toList(),
       metadata: json['externalSource'] == null
           ? null
-          : JsonMetadata.fromJson(
+          : PublisherMetadata.fromJson(
               json['externalSource'] as Map<String, dynamic>),
     )..otherVersions = (json['otherVersions'] as List<dynamic>)
         .map((e) => Publisher.fromJson(e as Map<String, dynamic>))

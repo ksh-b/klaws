@@ -1,15 +1,8 @@
 import 'package:hive_ce/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:klaws/model/publisher.dart';
+import 'package:klaws/model/publisher/publisher.dart';
 
 part 'article.g.dart';
-
-enum Metadata {
-  filtered,
-  translated,
-  saved,
-  live,
-}
 
 @JsonSerializable()
 @HiveType(typeId: 1)

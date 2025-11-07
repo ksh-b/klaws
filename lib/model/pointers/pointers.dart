@@ -1,6 +1,5 @@
-import 'package:klaws/model/source/watch_pointer.dart';
-
-import 'publisher_pointer.dart';
+import 'package:klaws/model/pointers/publisher_pointer.dart';
+import 'package:klaws/model/pointers/watch_pointer.dart';
 
 class Pointers {
   String name = "";

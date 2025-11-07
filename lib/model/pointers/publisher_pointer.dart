@@ -1,6 +1,6 @@
 import 'package:hive_ce/hive.dart';
 
-import 'other_version.dart';
+import '../publisher/other_version.dart';
 
 part 'publisher_pointer.g.dart';
 

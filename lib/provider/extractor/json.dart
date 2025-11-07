@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:json_path/json_path.dart';
-import 'package:klaws/model/article.dart';
-import 'package:klaws/model/publisher.dart';
-import 'package:klaws/model/source/metadata.dart';
+import 'package:klaws/model/publisher/article.dart';
+import 'package:klaws/model/publisher/publisher.dart';
+import 'package:klaws/model/publisher/metadata.dart';
 import 'package:klaws/util/util.dart';
 
 Future<Map<String, String>> extractCategoriesJson(Publisher source) async {

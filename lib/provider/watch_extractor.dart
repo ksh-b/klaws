@@ -1,16 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as html;
-import 'package:klaws/model/source/watch_dart.dart';
-import 'package:klaws/model/watch.dart';
+import 'package:klaws/model/watch/watch.dart';
 
 class WatchExtractor {
   Future<Items?> extractWatchContent(
-    WatchProducer watch,
+    Watch watch,
     String url,
       Dio dio,
   ) async {
-    var items = watch.watch.items;
+    var items = watch.items;
     if (items != null && items.extractor == "css") {
       final response = await dio.get(url);
       final document = html.parse(response.data);
@@ -65,6 +64,7 @@ class WatchExtractor {
   }
 
   List<String> _getNotes(Document document, List<String> notes) {
+    if(notes.isEmpty) return [];
     return notes
         .map((note) => document.querySelector(note)?.outerHtml ?? "")
         .toList();

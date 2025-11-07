@@ -1,8 +1,9 @@
 
 import 'package:hive_ce/hive.dart';
 
-part 'watch_dart.g.dart';
+part 'watch.g.dart';
 
+// Watch from JSON files
 @HiveType(typeId: 16)
 class Watch {
   @HiveField(0)
@@ -71,8 +72,6 @@ class Items {
   List<String> notes;
   @HiveField(7)
   String url;
-  // @HiveField(8)
-  // Axis_ axis;
 
   Items({
     required this.extractor,
@@ -83,7 +82,6 @@ class Items {
     required this.thumbnail,
     required this.notes,
     required this.url,
-    // required this.axis,
   });
 
   factory Items.fromJson(Map<String, dynamic> json) {
@@ -98,7 +96,6 @@ class Items {
           ?.map((note) => note.toString())
           .toList() ?? [],
       url: json['url'] ?? '',
-      // axis: Axis_.fromJson(json['axis']),
     );
   }
 
@@ -112,39 +109,10 @@ class Items {
       'thumbnail': thumbnail,
       'notes': notes,
       'url': url,
-      // 'axis': axis,
     };
   }
 
 }
-
-// @HiveType(typeId: 20)
-// class Axis_ {
-//   @HiveField(0)
-//   String content;
-//   @HiveField(1)
-//   String notes;
-//
-//   Axis_({
-//     required this.content,
-//     required this.notes,
-//   });
-//
-//   factory Axis_.fromJson(Map<String, dynamic> json) {
-//     return Axis_(
-//       content: json['content'] ?? '',
-//       notes: json['notes'] ?? '',
-//     );
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'content': content,
-//       'notes': notes,
-//     };
-//   }
-//
-// }
 
 @HiveType(typeId: 19)
 class Ing {

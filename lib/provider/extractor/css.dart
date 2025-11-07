@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as html;
-import 'package:klaws/model/article.dart';
-import 'package:klaws/model/publisher.dart';
-import 'package:klaws/model/source/metadata.dart';
+import 'package:klaws/model/publisher/article.dart';
+import 'package:klaws/model/publisher/publisher.dart';
+import 'package:klaws/model/publisher/metadata.dart';
 import 'package:klaws/util/util.dart';
 import 'package:klaws/util/modifier.dart';
 
