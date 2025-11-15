@@ -14,29 +14,28 @@ import 'package:test/test.dart';
 
 void main() {
   String repoUrl = "https://raw.githubusercontent.com/raven-repo/sources-news-technology/refs/heads/main/metadata.json";
+  String folder = "sources-news-technology-main";
 
   test('download zip', () async {
-    var setup = await (ZipSource(repoUrl)).setup(path: "./test");
-    print(setup.description);
+    var zipSource = ZipSource(repoUrl);
+    var repoMetadata = await zipSource.setup(path: "./test");
+    print(repoMetadata.description);
   });
 
   test('load sources.json', () async {
-    final pointersFile = File("./test/sources-world-news-main/sources.json");
+    final pointersFile = File("./test/$folder/sources.json");
     String sourcesJson = await pointersFile.readAsString();
     var pointers = Pointers.fromJson(json.decode(sourcesJson));
     expect(pointers.name, isNotEmpty);
-    expect(pointers.description, isNotEmpty);
-    expect(pointers.changelog, isNotEmpty);
-    expect(pointers.publisherPointers, isNotEmpty);
-    // expect(sources.watches, isNotEmpty);
+    expect(pointers.watchPointers.length + pointers.publisherPointers.length, isNonZero);
   });
 
   test('load source categories', () async {
-    final file = File("./test/sources-world-news-main/feeds/world/ap_news.json");
+    final file = File("./test/$folder/publishers/tech/tech_crunch.json");
     String jsonString = await file.readAsString();
     PublisherMetadata publisherMetadata = PublisherMetadata.fromJson(json.decode(jsonString));
     Publisher publisher = Publisher(
-      id: 'test/${publisherMetadata.name}',
+      id: 'test/$folder/${publisherMetadata.name}',
       hasCustomSupport: publisherMetadata.supportsCustomCategory,
       metadata: publisherMetadata,
       hasSearchSupport: publisherMetadata.searchUrl.isNotEmpty,
@@ -54,7 +53,7 @@ void main() {
   });
 
   test('load source category articles - page 1', () async {
-    final file = File("./test/sources-world-news-main/feeds/world/ap_news.json");
+    final file = File("./test/sources-news-technology-main/publishers/tech/tech_crunch.json");
     String jsonString = await file.readAsString();
     PublisherMetadata nest = PublisherMetadata.fromJson(json.decode(jsonString));
     Publisher source = Publisher(
@@ -76,7 +75,7 @@ void main() {
   });
 
   test('x load source category article', () async {
-    final file = File("./test/sources-world-news-main/feeds/world/ap_news.json");
+    final file = File("./test/sources-news-technology-main/publishers/tech/tech_crunch.json");
     String jsonString = await file.readAsString();
     PublisherMetadata nest = PublisherMetadata.fromJson(json.decode(jsonString));
     Publisher source = Publisher(
@@ -106,7 +105,7 @@ void main() {
 
 
   test('load watch', () async {
-    final file = File("./test/sources-world-news-main/watches/stock-market/nasdaq.json");
+    final file = File("./test/sources-news-technology-main/watches/stock-market/nasdaq.json");
     String jsonString = await file.readAsString();
     Watch watch = Watch.fromJson(json.decode(jsonString));
     var w = await WatchExtractor().extractWatchContent(

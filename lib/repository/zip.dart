@@ -20,7 +20,7 @@ class ZipSource extends Repo {
     var publishers = [];
     var publisherPointers = pointers.publisherPointers;
     for (var ptr in publisherPointers) {
-      final file = File("$path/${ptr.file}");
+      final file = File("$path/${repoMetadata.zipFolder}/${ptr.file}");
       String jsonString = await file.readAsString();
       PublisherMetadata publisherMetadata = PublisherMetadata.fromJson(json.decode(jsonString));
       Publisher publisher = Publisher(
