@@ -224,6 +224,12 @@ Future<RepoMetadata> downloadAndExtractZip(String metadataUrl, String outputDire
     final Map<String, dynamic> json = jsonDecode(data);
     metadata = RepoMetadata.fromJson(json);
 
+    // Delete the extracted contents
+    var root = Directory("$outputDirectory/${metadata.zipFolder}/");
+    if (await root.exists()) {
+      root.delete(recursive: true);
+    }
+
     // Download the ZIP file
     response = await dio.get(metadata.zipUrl, options: Options(responseType: ResponseType.bytes));
     final bytes = response.data;
