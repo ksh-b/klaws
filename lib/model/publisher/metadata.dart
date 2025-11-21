@@ -1,37 +1,22 @@
-
-import 'package:hive_ce/hive.dart';
-
-part 'metadata.g.dart';
-
 // Publisher from JSON files
-@HiveType(typeId: 5)
-class PublisherMetadata {
+import 'dart:convert';
 
-  @HiveField(0)
+import 'package:json_annotation/json_annotation.dart';
+
+@JsonSerializable()
+class PublisherMetadata {
   String name = "";
-  @HiveField(1)
   String homePage = "";
-  @HiveField(2)
   List<String> category = [];
-  @HiveField(3)
   Categories categories = Categories.empty();
-  @HiveField(4)
   String categoryUrl = "";
-  @HiveField(5)
   String iconUrl = "";
-  @HiveField(6)
   bool supportsCustomCategory = false;
-  @HiveField(7)
   SourceArticle categoryArticles = SourceArticle.empty();
-  @HiveField(8)
   SourceArticle article = SourceArticle.empty();
-  @HiveField(9)
   String searchUrl = "";
-  @HiveField(10)
   SourceArticle searchArticles = SourceArticle.empty();
-  @HiveField(11)
   Headers headers = Headers.fromJson({});
-  @HiveField(12)
   List<String> ads = [];
 
   PublisherMetadata({
@@ -83,17 +68,17 @@ class PublisherMetadata {
     data['ads'] = ads;
     return data;
   }
+
+  @override
+  String toString() => json.encode(toJson());
 }
 
-@HiveType(typeId: 6)
+
+@JsonSerializable()
 class Categories {
-  @HiveField(0)
   String extractor = "";
-  @HiveField(1)
   List<String> locator = [];
-  @HiveField(2)
   Include include = Include.fromJson({});
-  @HiveField(3)
   List<String> exclude = [];
 
   Categories({
@@ -122,17 +107,13 @@ class Categories {
   }
 }
 
-@HiveType(typeId: 7)
+
+@JsonSerializable()
 class SourceArticle {
-  @HiveField(0)
   String extractor = "";
-  @HiveField(1)
   Locators locators = Locators.empty();
-  @HiveField(2)
   String timezone = "";
-  @HiveField(3)
   String dateFormat = "";
-  @HiveField(4)
   List<Map<String, dynamic>> modifications = [];
 
   SourceArticle({
@@ -165,27 +146,18 @@ class SourceArticle {
   }
 }
 
-@HiveType(typeId: 8)
+
+@JsonSerializable()
 class Locators {
-  @HiveField(0)
   String container = "";
-  @HiveField(1)
   String title = "";
-  @HiveField(2)
   String excerpt = "";
-  @HiveField(3)
   String author = "";
-  @HiveField(4)
   String thumbnail = "";
-  @HiveField(5)
   String url = "";
-  @HiveField(6)
   String time = "";
-  @HiveField(7)
   List<String> tags = [];
-  @HiveField(8)
   String category = "";
-  @HiveField(9)
   List<String> content = [];
 
   Locators({
@@ -232,13 +204,10 @@ class Locators {
   }
 }
 
-@HiveType(typeId: 10)
+@JsonSerializable()
 class Headers {
-  @HiveField(0)
   Map<String, dynamic> json_ = {};
-
   Headers({required this.json_});
-
   Headers.fromJson(Map<String, dynamic> json) {
     json_ = json;
   }
@@ -248,11 +217,9 @@ class Headers {
   }
 }
 
-@HiveType(typeId: 9)
+@JsonSerializable()
 class Include {
-  @HiveField(0)
   Map<String, String> json_ = {};
-
   Include({required this.json_});
 
   Include.fromJson(Map<String, String> json) {

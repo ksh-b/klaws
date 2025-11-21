@@ -1,31 +1,21 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
-import 'package:hive_ce/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:klaws/model/publisher/article.dart';
 import 'package:klaws/model/publisher/metadata.dart';
-
 part 'publisher.g.dart';
 
 @JsonSerializable()
-@HiveType(typeId: 4)
 class Publisher {
-  @HiveField(0)
   final String id;
-  @HiveField(1)
   final String name;
-  @HiveField(2)
   final String homePage;
-  @HiveField(3)
   final bool hasSearchSupport;
-  @HiveField(4)
   final bool hasCustomSupport;
-  @HiveField(5)
   final String iconUrl;
-  @HiveField(6)
   final List<String> siteCategories;
-  @HiveField(7)
   final PublisherMetadata? metadata;
-  @HiveField(8)
   List<Publisher> otherVersions = [];
 
   Publisher({
@@ -80,7 +70,10 @@ class Publisher {
     return {};
   }
 
-  factory Publisher.fromJson(Map<String, dynamic> json) => _$SourceFromJson(json);
+  factory Publisher.fromJson(Map<String, dynamic> json) => _$PublisherFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SourceToJson(this);
+  Map<String, dynamic> toJson() => _$PublisherToJson(this);
+
+  @override
+  String toString() => json.encode(toJson());
 }

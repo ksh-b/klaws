@@ -1,18 +1,11 @@
-import 'package:hive_ce/hive.dart';
-
+import 'package:objectbox/objectbox.dart';
 import '../publisher/other_version.dart';
-
-part 'publisher_pointer.g.dart';
-
-@HiveType(typeId: 11)
 
 // publishers.json
 class PublisherPointer {
-  @HiveField(0)
+  int id = 0;
   String name = "";
-  @HiveField(1)
   String file = "";
-  @HiveField(2)
   List<OtherVersion> otherversions = [];
 
   PublisherPointer({

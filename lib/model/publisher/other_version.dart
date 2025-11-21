@@ -1,11 +1,10 @@
-import 'package:hive_ce/hive.dart';
+import 'dart:convert';
 
-part 'other_version.g.dart';
-@HiveType(typeId: 12)
+import 'package:objectbox/objectbox.dart';
+
 class OtherVersion {
-  @HiveField(0)
+  int id = 0;
   String name = "";
-  @HiveField(1)
   String file = "";
 
   OtherVersion({
@@ -24,4 +23,7 @@ class OtherVersion {
     map['file'] = file;
     return map;
   }
+
+  @override
+  String toString() => json.encode(toJson());
 }

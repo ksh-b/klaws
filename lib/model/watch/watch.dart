@@ -1,22 +1,17 @@
+// Watch from JSON files
+import 'dart:convert';
 
-import 'package:hive_ce/hive.dart';
-
+import 'package:json_annotation/json_annotation.dart';
 part 'watch.g.dart';
 
-// Watch from JSON files
-@HiveType(typeId: 16)
+@JsonSerializable()
 class Watch {
-  @HiveField(0)
+  int id = 0;
   String name="";
-  @HiveField(1)
   String description="";
-  @HiveField(2)
   String category="";
-  @HiveField(3)
   String url="";
-  @HiveField(4)
   List<Option> options=[];
-  @HiveField(5)
   Items? items;
 
   Watch({
@@ -52,25 +47,18 @@ class Watch {
     };
   }
 
+  @override
+  String toString() => json.encode(toJson());
 }
 
-@HiveType(typeId: 21)
 class Items {
-  @HiveField(0)
   String extractor;
-  @HiveField(1)
   String title;
-  @HiveField(2)
   String subtitle;
-  @HiveField(3)
   Ing leading;
-  @HiveField(4)
   Ing trailing;
-  @HiveField(5)
   String thumbnail;
-  @HiveField(6)
   List<String> notes;
-  @HiveField(7)
   String url;
 
   Items({
@@ -114,11 +102,8 @@ class Items {
 
 }
 
-@HiveType(typeId: 19)
 class Ing {
-  @HiveField(0)
   String top;
-  @HiveField(1)
   String bottom;
 
   Ing({
@@ -142,19 +127,15 @@ class Ing {
 
 }
 
-@HiveType(typeId: 18)
 class Option {
-  @HiveField(0)
   String name;
-  @HiveField(1)
   String description;
-  @HiveField(2)
-  String optionDefault;
+  String example;
 
   Option({
     required this.name,
     required this.description,
-    required this.optionDefault,
+    required this.example,
   });
 
 
@@ -162,7 +143,7 @@ class Option {
     return Option(
       name: json['name'] ?? '',
       description: json['description'] ?? '',
-      optionDefault: json['optionDefault'] ?? '',
+      example: json['example'] ?? '',
     );
   }
 
@@ -170,7 +151,7 @@ class Option {
     return {
       'name': name,
       'description': description,
-      'optionDefault': optionDefault,
+      'example': example,
     };
   }
 

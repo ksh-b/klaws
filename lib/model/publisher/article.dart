@@ -1,37 +1,26 @@
-import 'package:hive_ce/hive.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:klaws/model/publisher/publisher.dart';
 
+import 'dart:convert';
+
+import 'package:json_annotation/json_annotation.dart';
+
+import 'publisher.dart';
 part 'article.g.dart';
 
 @JsonSerializable()
-@HiveType(typeId: 1)
 class Article {
-  @HiveField(0)
+  int id = 0;
   Publisher publisher;
-  @HiveField(1)
   String name;
-  @HiveField(2)
   String title;
-  @HiveField(3)
   String content;
-  @HiveField(4)
   String excerpt;
-  @HiveField(5)
   String author;
-  @HiveField(6)
   String url;
-  @HiveField(7)
   String thumbnail;
-  @HiveField(8)
   String category;
-  @HiveField(9)
   List<String> tags;
-  @HiveField(10)
   int publishedAt;
-  @HiveField(12)
   String publishedAtString;
-  @HiveField(11)
   Map<String, String> metadata = {};
 
   Article({
@@ -81,6 +70,9 @@ class Article {
   factory Article.fromJson(Map<String, dynamic> json) => _$ArticleFromJson(json);
 
   Map<String, dynamic> toJson() => _$ArticleToJson(this);
+
+  @override
+  String toString() => json.encode(toJson());
 
   @override
   bool operator ==(Object other) {

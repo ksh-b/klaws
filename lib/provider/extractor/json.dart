@@ -35,7 +35,7 @@ Future<List<Article>> extractSearchArticlesJson(
   Publisher source,
   String query,
   int page,
-    Dio dio
+  Dio dio
 ) async {
   String? url = source.metadata!.searchUrl
       .replaceAll("{home-page}", source.metadata!.homePage)

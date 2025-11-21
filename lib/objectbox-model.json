@@ -1,0 +1,339 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:6383880111676249409",
+      "lastPropertyId": "12:8632859208782899005",
+      "name": "Article",
+      "properties": [
+        {
+          "id": "1:6702916403855633441",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7596763371806245061",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:5847482483849136009",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:8249572807124520396",
+          "name": "content",
+          "type": 9
+        },
+        {
+          "id": "5:1802004682827189613",
+          "name": "excerpt",
+          "type": 9
+        },
+        {
+          "id": "6:3527730903866806188",
+          "name": "author",
+          "type": 9
+        },
+        {
+          "id": "7:343336360439831628",
+          "name": "url",
+          "type": 9
+        },
+        {
+          "id": "8:6079697250462516329",
+          "name": "thumbnail",
+          "type": 9
+        },
+        {
+          "id": "9:5582098195068424466",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "10:6458076109266050499",
+          "name": "tags",
+          "type": 30
+        },
+        {
+          "id": "11:3378007478080359709",
+          "name": "publishedAt",
+          "type": 6
+        },
+        {
+          "id": "12:8632859208782899005",
+          "name": "publishedAtString",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:5062148193081291878",
+      "lastPropertyId": "3:7037967271629374954",
+      "name": "OtherVersion",
+      "properties": [
+        {
+          "id": "1:4565382723530998790",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:916822570465727988",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:7037967271629374954",
+          "name": "file",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:1082670934145082703",
+      "lastPropertyId": "2:8549445353190356304",
+      "name": "Pointers",
+      "properties": [
+        {
+          "id": "1:832387188464101097",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8549445353190356304",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:3260694800774471232",
+      "lastPropertyId": "8:4025410856593130837",
+      "name": "Publisher",
+      "properties": [
+        {
+          "id": "1:2105636988602394978",
+          "name": "pid",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6238461930588598572",
+          "name": "id",
+          "type": 9
+        },
+        {
+          "id": "3:5067218240684828813",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:6265506048823321676",
+          "name": "homePage",
+          "type": 9
+        },
+        {
+          "id": "5:2020787661532632774",
+          "name": "hasSearchSupport",
+          "type": 1
+        },
+        {
+          "id": "6:5253592080135862818",
+          "name": "hasCustomSupport",
+          "type": 1
+        },
+        {
+          "id": "7:6058576712421241534",
+          "name": "iconUrl",
+          "type": 9
+        },
+        {
+          "id": "8:4025410856593130837",
+          "name": "siteCategories",
+          "type": 30
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:7281665548221017114",
+      "lastPropertyId": "9:133755492909774633",
+      "name": "PublisherMetadata",
+      "properties": [
+        {
+          "id": "1:1432547453819857187",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6893998461174026056",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:8765719614183727307",
+          "name": "homePage",
+          "type": 9
+        },
+        {
+          "id": "4:7290957111386082649",
+          "name": "category",
+          "type": 30
+        },
+        {
+          "id": "5:3166083897136691371",
+          "name": "categoryUrl",
+          "type": 9
+        },
+        {
+          "id": "6:5323437574436914123",
+          "name": "iconUrl",
+          "type": 9
+        },
+        {
+          "id": "7:4287540554859694263",
+          "name": "supportsCustomCategory",
+          "type": 1
+        },
+        {
+          "id": "8:4216759203015077930",
+          "name": "searchUrl",
+          "type": 9
+        },
+        {
+          "id": "9:133755492909774633",
+          "name": "ads",
+          "type": 30
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:2183913094358531269",
+      "lastPropertyId": "3:1088686478186771488",
+      "name": "PublisherPointer",
+      "properties": [
+        {
+          "id": "1:6775137375980725274",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6225858735012652650",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:1088686478186771488",
+          "name": "file",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:4562151342537010907",
+      "lastPropertyId": "3:240378323555637341",
+      "name": "Trends",
+      "properties": [
+        {
+          "id": "1:6759473340874084149",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1248831537908920079",
+          "name": "extractor",
+          "type": 9
+        },
+        {
+          "id": "3:240378323555637341",
+          "name": "locator",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:8676444344983746538",
+      "lastPropertyId": "5:9220083175655565792",
+      "name": "Watch",
+      "properties": [
+        {
+          "id": "1:4733746131842336752",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5641733992455408661",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:4999820255153676731",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:6274319603521007337",
+          "name": "category",
+          "type": 9
+        },
+        {
+          "id": "5:9220083175655565792",
+          "name": "url",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:547941669890824757",
+      "lastPropertyId": "3:8884063613578557377",
+      "name": "WatchPointer",
+      "properties": [
+        {
+          "id": "1:5550105409893921620",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3401222756856823028",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:8884063613578557377",
+          "name": "file",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "9:547941669890824757",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

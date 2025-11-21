@@ -1,12 +1,8 @@
-import 'package:hive_ce/hive.dart';
+import 'package:objectbox/objectbox.dart';
 
-part 'watch_pointer.g.dart';
-
-@HiveType(typeId: 16)
 class WatchPointer {
-  @HiveField(0)
+  int id = 0;
   String name = "";
-  @HiveField(1)
   String file = "";
 
   WatchPointer({
