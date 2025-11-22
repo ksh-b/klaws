@@ -1,7 +1,7 @@
 // Publisher from JSON files
 import 'dart:convert';
-
 import 'package:json_annotation/json_annotation.dart';
+part 'metadata.g.dart';
 
 @JsonSerializable()
 class PublisherMetadata {
